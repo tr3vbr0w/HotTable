@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>HotRestaurant View Table</title>
+        <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+            <div class="jumbotron">
+                <h1>HotRestaurant</h1>
+                <h3>Book a table, view your reservation. PARTAY</h3>
+                <a href="/add"><button class="btn btn-danger btn-lg"><span class="fa fa-plus"></span>Make a New Reservation</button></a>
+                <a href="/"><button class="btn btn-danger btn-lg"><span
+                    class="fa fa-home"></span></button></a>
+            </div>
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3><strong>Current Tables</strong></h3>
+                        </div>
+                        <div class="card-body">
+                            <ul id="table-list" class = "list-group">
+                            </ul>
+                        </div>
+                        <div class="card-header">
+                            <h3><strong>Wait List</strong></h3>
+                        </div>
+                        <ul id="wait-list" class = "list-group">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+    </div>
+    <script>
+            var reservations = [{
+                name: "Dana",
+                email: "dana@foo.com",
+                phone: 8675309,
+                uniqueID: "Dana2019"
+            }];
+            var waitListData = [{
+                name: "Chris",
+                email: "chris@foo.com",
+                phone: 86750928309,
+                uniqueID: "Chris2019"
+            }];
+            function displayReservations() {
+                $.get("/api/reservation", function(data){
+                    console.log(data);
+                    
+                    for (let i = 0; i < 5; i++) {
+                        var tableList = $('#table-list')
+                        var listItem = $("<li class = 'list-group-item mt-4'>")
+                        const element = data[i];
+                        listItem.append(
+                            $("<h2>").text("Table No" + (i + 1)),
+                            $("<hr>"),
+                            $("<h2>").text("ID: " + element.uniqueID), 
+                            $("<h2>").text("Name: " + element.name),
+                            $("<h2>").text("email: " + element.email), 
+                            $("<h2>").text("Phone Number: " + element.phone), 
+                        );
+                        
+                        tableList.append(listItem);
+                        
+                    }
+                    for (let i = 5; i < data.length; i++) {
+                        var waitList = $('#wait-list')
+                        var listItem = $("<li class = 'list-group-item mt-4'>")
+                        const element = data[i];
+                        listItem.append(
+                            $("<h2>").text("Table No" + (i + 1)),
+                            $("<hr>"),
+                            $("<h2>").text("ID: " + element.uniqueID), 
+                            $("<h2>").text("Name: " + element.name),
+                            $("<h2>").text("email: " + element.email), 
+                            $("<h2>").text("Phone Number: " + element.phone), 
+                        );
+                
+                    waitList.append(listItem);
+                    }
+                });
+            }
+         displayReservations();
+
+        
+        
+        </script>
+</body>
+</html>
+
